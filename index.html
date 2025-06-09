@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Johnstone Supply Counter</title>
+  <style>
+    body {
+      background-color: #e6edf2;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .counter-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .counter-box {
+      flex: 1 1 200px;
+      max-width: 250px;
+    }
+
+    .icon-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #004990;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px auto;
+    }
+
+    .icon-circle svg {
+      width: 40px;
+      height: 40px;
+      fill: white;
+    }
+
+    .counter-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #004990;
+    }
+
+    .counter-label {
+      margin-top: 5px;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter-section">
+    <div class="counter-box">
+      <div class="icon-circle">
+        <!-- Shopping Cart Icon -->
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14h9.58c.89 0 1.67-.58 1.93-1.44L21 6H5.21L4.27 2H1v2h2l3.6 7.59-1.35 2.45C4.52 14.37 5.48 16 7 16h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L7.16 14z"/></svg>
+      </div>
+      <div class="counter-number" data-target="80000">0</div>
+      <div class="counter-label">Products available online</div>
+    </div>
+
+    <div class="counter-box">
+      <div class="icon-circle">
+        <!-- Clock Icon -->
+        <svg viewBox="0 0 24 24"><path d="M12 20c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm0 2C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm-1-10h5v2h-7V7h2v5z"/></svg>
+      </div>
+      <div class="counter-number" data-target="70">0</div>
+      <div class="counter-label">Years of HVAC Excellence</div>
+    </div>
+
+    <div class="counter-box">
+      <div class="icon-circle">
+        <!-- Building Icon -->
+        <svg viewBox="0 0 24 24"><path d="M4 22h16v-2H4v2zM20 2H4v16h16V2zM11 4h2v2h-2V4zm0 4h2v2h-2V8zm0 4h2v2h-2v-2z"/></svg>
+      </div>
+      <div class="counter-number" data-target="450">0</div>
+      <div class="counter-label">Johnstone Supply stores nationwide</div>
+    </div>
+  </div>
+
+  <script>
+    function animateCounter(element, target) {
+      let count = 0;
+      const speed = target / 50;
+
+      const update = () => {
+        count += speed;
+        if (count < target) {
+          element.textContent = Math.floor(count);
+          requestAnimationFrame(update);
+        } else {
+          element.textContent = target + "+";
+        }
+      };
+
+      update();
+    }
+
+    function startCounting() {
+      document.querySelectorAll('.counter-number').forEach(el => {
+        const target = +el.getAttribute('data-target');
+        animateCounter(el, target);
+      });
+    }
+
+    let triggered = false;
+    window.addEventListener('scroll', () => {
+      const section = document.querySelector('.counter-section');
+      const rect = section.getBoundingClientRect();
+      if (!triggered && rect.top < window.innerHeight) {
+        triggered = true;
+        startCounting();
+      }
+    });
+  </script>
+</body>
+</html>
