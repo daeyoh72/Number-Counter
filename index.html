@@ -84,39 +84,43 @@
   </div>
 
   <script>
-    function animateCounter(element, target) {
-      let count = 0;
-      const speed = target / 50;
+  function animateCounter(element, target) {
+    let count = 0;
+    const speed = target / 50;
 
-      const update = () => {
-        count += speed;
-        if (count < target) {
-          element.textContent = Math.floor(count);
-          requestAnimationFrame(update);
-        } else {
-          element.textContent = target + "+";
-        }
-      };
-
-      update();
-    }
-
-    function startCounting() {
-      document.querySelectorAll('.counter-number').forEach(el => {
-        const target = +el.getAttribute('data-target');
-        animateCounter(el, target);
-      });
-    }
-
-    let triggered = false;
-    window.addEventListener('scroll', () => {
-      const section = document.querySelector('.counter-section');
-      const rect = section.getBoundingClientRect();
-      if (!triggered && rect.top < window.innerHeight) {
-        triggered = true;
-        startCounting();
+    const update = () => {
+      count += speed;
+      if (count < target) {
+        element.textContent = Math.floor(count);
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = target + "+";
       }
+    };
+
+    update();
+  }
+
+  function startCounting() {
+    document.querySelectorAll('.counter-number').forEach(el => {
+      const target = +el.getAttribute('data-target');
+      animateCounter(el, target);
     });
-  </script>
+  }
+
+  let triggered = false;
+  function checkAndStart() {
+    const section = document.querySelector('.counter-section');
+    const rect = section.getBoundingClientRect();
+    if (!triggered && rect.top < window.innerHeight) {
+      triggered = true;
+      startCounting();
+    }
+  }
+
+  // Trigger on scroll AND on load
+  window.addEventListener('scroll', checkAndStart);
+  window.addEventListener('load', checkAndStart);
+</script>
 </body>
 </html>
