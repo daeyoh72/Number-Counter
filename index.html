@@ -82,7 +82,6 @@
       <div class="counter-label">Johnstone Supply Stores Nationwide</div>
     </div>
   </div>
-
   <script>
   function animateCounter(element, target) {
     let count = 0;
@@ -101,26 +100,13 @@
     update();
   }
 
-  function startCounting() {
+  // Always trigger on load — no scroll detection needed in iframe
+  window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.counter-number').forEach(el => {
       const target = +el.getAttribute('data-target');
       animateCounter(el, target);
     });
-  }
-
-  let triggered = false;
-  function checkAndStart() {
-    const section = document.querySelector('.counter-section');
-    const rect = section.getBoundingClientRect();
-    if (!triggered && rect.top < window.innerHeight) {
-      triggered = true;
-      startCounting();
-    }
-  }
-
-  // Trigger on scroll AND on load
-  window.addEventListener('scroll', checkAndStart);
-  window.addEventListener('load', checkAndStart);
+  });
 </script>
 </body>
 </html>
